@@ -6,6 +6,7 @@ const { models } = require('../db/sequelize');
 class ProductsService {
 
   async create(data) {
+    console.log(data)
     const category = await models.Category.findByPk(data.categoryId);
     if (!category) {
       throw boom.notFound('category not found');
@@ -61,6 +62,10 @@ class ProductsService {
     const product = await this.findOne(id);
     await product.destroy();
     return { id };
+  }
+
+  async getByCategory(id){
+    return await models.Product.findAll({where: {categoryId: id}  })
   }
 
 }
